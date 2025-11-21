@@ -1,0 +1,860 @@
+/* =================================================================
+   🎨 CONFIGURAÇÕES GLOBAIS DE COR E TIPOGRAFIA (EDITAR AQUI)
+   ================================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+    /* Cores Principais */
+    --primary-color: #feb101; /* Cor de Ação (Botões Confirmar, Adicionar) */
+    --primary-dark: #db9a00; /* Cor Hover e Destaques */
+    --error-color: #E53935; /* Cor de erro (Total Final e Validação) */
+    --categoryColor: #333; /* Cor Categoria */
+    
+    /* Cores Neutras */
+    --text-dark: #333;
+    --text-light: #757575;
+    --bg-light: #f5f5f5;
+    --white: #FFFFFF;
+    --border-color: #EEEEEE;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    
+    /* Tipografia */
+    font-family: 'Roboto', sans-serif;
+}
+
+/* =================================================================
+   ⚙️ REGRAS GERAIS E LAYOUT DE SMARTPHONE CENTRALIZADO (CORRIGIDO)
+   ================================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family);
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    padding-bottom: 0px;
+    
+    /* ⬅️ ATUALIZADO: Remove a centralização e a largura máxima do body */
+    margin: 0;
+    padding-top: 60px; /* Adiciona padding no topo para o header fixo */
+    min-height: 100vh; 
+    
+    /* ⬅️ NOVO: Cria um container interno para limitar o conteúdo */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o conteúdo (header, main, etc.) */
+}
+
+/* ⬅️ NOVO: Container wrapper para limitar o conteúdo à largura do smartphone */
+.app-wrapper {
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); 
+    background-color: var(--white); /* Garante que a área centralizada seja branca */
+    min-height: calc(100vh - 60px); /* Ajusta a altura mínima */
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+/* HEADER FIXO (CORRIGIDO) */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background-color: var(--white);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    
+    /* ⬅️ CORREÇÃO: Usa position: fixed para ocupar 100% da largura da viewport */
+    position: fixed; 
+    top: 0;
+    left: 0;
+    right: 0;
+    
+    /* ⬅️ NOVO: Garante que o header não exceda a largura máxima de 420px, mas seja centralizado */
+    max-width: 100vw; 
+    width: 100%; 
+    margin: 0 auto; /* Centraliza o header fixo na tela */
+    
+    z-index: 100;
+}
+
+/* Container da logo sticky que aparece na rolagem */
+.header-sticky-logo-container {
+    display: none; 
+    align-items: center;
+    gap: 8px; 
+}
+
+/* Estilo para a logo que aparece no scroll */
+.sticky-logo {
+    width: 25px; 
+    height: 25px; 
+    object-fit: contain;
+    border-radius: 6px; 
+    transition: opacity 0.3s;
+}
+
+/* Agrupador do texto do logo */
+.logo-group {
+    display: flex;
+    align-items: center;
+}
+
+.logo-text {
+    font-size: 1rem; 
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.cart-icon-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.cart-icon-container i {
+    width: 28px;
+    height: 28px;
+    color: var(--text-dark);
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.75rem; 
+    font-weight: 700;
+}
+
+/* CONTAINER PRINCIPAL */
+.container {
+    padding: 16px;
+    /* ⬅️ O container principal agora está dentro do .app-wrapper */
+}
+
+/* --- ESTILOS PARA O HEADER INFORMATIVO --- */
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 16px; 
+    padding: 16px 0; 
+    margin-bottom: 8px; 
+    border-bottom: 1px solid var(--border-color);
+}
+
+.business-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 8px; 
+    flex-shrink: 0;
+}
+
+.info-text-wrapper {
+    flex: 1;
+}
+
+.business-name-display {
+    font-size: 1.3rem; 
+    font-weight: 700;
+    margin-bottom: 4px;
+    line-height: 1.1;
+}
+
+.status-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+}
+
+.business-status {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--error-color); 
+}
+
+.business-status.open {
+    color: var(--primary-dark); 
+}
+
+.delivery-time-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    color: var(--text-light);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: white;
+    padding: 0 8px 0 5px;
+    border-radius: 20px;
+    background-color: #f59f00;
+}
+
+.delivery-time-display > span {
+    font-size: 18px;
+    margin-right: 4px;
+}
+
+.operating-hours-display {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-top: 4px;
+}
+
+/* AJUSTE PARA O TÍTULO PRINCIPAL */
+.main-title {
+    font-size: 2rem; 
+    font-weight: 700;
+    margin-top: 16px; 
+    margin-bottom: 4px;
+}
+
+.main-subtitle {
+    font-size: 1rem; 
+    color: var(--text-light);
+    margin-bottom: 24px;
+}
+
+/* --- DESIGN DO CARDÁPIO --- */
+.category {
+    margin-bottom: 24px;
+}
+
+.category-title {
+    font-size: 1.25rem; 
+    font-weight: 700;
+    color: var(--categoryColor);
+    margin-bottom: 16px;
+    margin-left: 4px; 
+}
+
+.product-card {
+    display: flex;
+    align-items: flex-start; 
+    background-color: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 12px;
+    margin-bottom: 16px;
+}
+
+.product-image {
+    width: 100px; 
+    height: 100px; 
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 12px; 
+    flex-shrink: 0; 
+}
+
+.product-details-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100px; 
+}
+
+.product-info {
+    flex: 1;
+}
+
+.product-title {
+    font-size: 1.125rem; 
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.product-description {
+    font-size: 0.875rem; 
+    color: var(--text-light);
+    margin-bottom: 8px;
+}
+
+.product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px; 
+}
+
+.product-price {
+    font-size: 1.1rem; 
+    font-weight: 700;
+    color: var(--primary-color); 
+}
+
+.add-to-cart-btn {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 50px; 
+    padding: 6px 14px; 
+    font-size: 0.85rem; 
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: auto; 
+    justify-content: center;
+}
+
+.add-to-cart-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+/* =================================================================
+   💰 ESTILOS PARA PROMOÇÕES 
+   ================================================================= */
+
+.price-promotion-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+}
+
+.promotion-price {
+    line-height: 1; 
+    margin-bottom: 2px;
+}
+
+.old-price-line {
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+}
+
+.product-old-price {
+    font-size: 0.8rem; 
+    color: var(--text-light); 
+    text-decoration: line-through; 
+    font-weight: 500;
+    line-height: 1;
+}
+
+.discount-badge {
+    background-color: var(--primary-color); 
+    color: var(--white);
+    font-size: 0.75rem; 
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 50px;
+    line-height: 1; 
+}
+
+
+/* CARRINHO LATERAL */
+.cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%; 
+    width: 100%;
+    max-width: 420px;
+    height: 100vh;
+    background-color: var(--white);
+    box-shadow: -4px 0 16px rgba(0, 0, 0, 0.1);
+    z-index: 200;
+    transition: right 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column; 
+}
+
+.cart-sidebar.open {
+    right: 0; 
+}
+
+.cart-header {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.cart-header i {
+    width: 24px;
+    height: 24px;
+    color: var(--text-dark);
+}
+
+.cart-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-left: 12px;
+    flex: 1;
+}
+
+.cart-close-btn {
+    padding: 4px;
+}
+
+.cart-items-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+.cart-empty-msg {
+    text-align: center;
+    color: var(--text-light);
+    margin-top: 32px;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#cart-item-list > .cart-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.cart-item-img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 12px;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.cart-item-price {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-bottom: 8px;
+}
+
+.cart-item-obs-display {
+    font-size: 0.875rem;
+    color: var(--primary-dark);
+    font-weight: 500;
+    margin-bottom: 4px; 
+    word-break: break-word; 
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.quantity-btn {
+    background-color: var(--bg-light);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.quantity-btn i {
+    width: 16px;
+    height: 16px;
+}
+
+.quantity-btn.remove-btn {
+    color: var(--error-color); 
+}
+
+.item-quantity {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.cart-item-remove-btn {
+    margin-left: 16px;
+    color: var(--text-light);
+}
+
+/* Formulário */
+.form-group {
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: var(--text-light);
+}
+
+.form-group input,
+.modal-textarea,
+.form-group select { 
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: var(--bg-light);
+    -webkit-appearance: none; 
+    -moz-appearance: none;    
+    appearance: none;         
+    cursor: auto; 
+}
+
+.form-group input:focus,
+.modal-textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: var(--white);
+}
+
+.address-line-one,
+.address-line-two {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px; 
+}
+.address-line-one .form-group,
+.address-line-two .form-group {
+    margin-bottom: 0; 
+}
+
+.address-line-one .rua-input {
+    flex: 3; 
+}
+.address-line-one .numero-input {
+    flex: 1; 
+    max-width: 100px; 
+}
+
+.address-line-two .bairro-input,
+.address-line-two .cidade-input {
+    flex: 1; 
+}
+
+
+/* RODAPÉ DO CARRINHO */
+.cart-footer {
+    padding: 16px;
+    background-color: var(--white);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+    flex-shrink: 0; 
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.cart-total span {
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+.finish-order-btn {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.finish-order-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.finish-order-btn:disabled {
+    background-color: #BDBDBD;
+    cursor: not-allowed;
+}
+
+/* OVERLAY DO CARRINHO */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 199;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* MODAL GERAL */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 299; 
+    display: none; 
+}
+
+.product-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    z-index: 300; 
+    padding: 24px;
+    width: 90%;
+    max-width: 400px; 
+    display: none; 
+    flex-direction: column;
+    gap: 16px;
+    max-height: 90vh; 
+    overflow-y: auto;
+}
+
+#addressDataModal {
+     max-width: 480px; 
+}
+
+#deliveryOptionModal {
+     max-width: 350px; 
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.modal-textarea {
+    min-height: 80px;
+    resize: vertical; 
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    flex-shrink: 0; 
+}
+
+.modal-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: background-color 0.2s;
+}
+
+.modal-btn.cancel {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+.modal-btn.cancel:hover {
+    background-color: var(--border-color);
+}
+
+.modal-btn.confirm {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+.modal-btn.confirm:hover {
+    background-color: var(--primary-dark);
+}
+
+
+/* =================================================================
+   ✨ AJUSTADO: ESTILOS PARA OPÇÕES (CHECKBOX/RADIO) NO MODAL
+   ================================================================= */
+
+/* Grupo de opções (Ponto da Carne, Molhos, etc.) */
+.option-group {
+    border: 1px solid var(--border-color);
+    border-radius: 10px; 
+    padding: 12px;
+    margin-bottom: 16px; 
+    background-color: var(--white); 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); 
+}
+
+.option-group h4 {
+    font-size: 1.05rem; 
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg-light); 
+}
+
+/* Item individual (checkbox/radio e label) */
+.option-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.option-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Oculta o input nativo */
+.modal-option-input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Estilo do label que funciona como wrapper do conteúdo */
+.option-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    padding: 12px 12px 12px 40px; 
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-light); 
+    transition: all 0.2s;
+    position: relative; 
+    min-height: 44px;
+    box-sizing: border-box;
+}
+
+/* 1. Estilo do marcador customizado (O Círculo ou Quadrado externo) */
+.option-label::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px; 
+    height: 20px; 
+    border: 2px solid var(--text-light);
+    background-color: var(--white);
+    transition: all 0.2s;
+    flex-shrink: 0; 
+}
+
+/* 2. Estilo do "Check" (O preenchimento interno) */
+.option-label::after {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    transition: transform 0.2s, background-color 0.2s;
+    flex-shrink: 0;
+}
+
+
+/* --- CHECKBOX (Quadrado) --- */
+input[type="checkbox"].modal-option-input + .option-label::before {
+    border-radius: 4px; /* Quadrado */
+}
+input[type="checkbox"].modal-option-input:checked + .option-label::before {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+input[type="checkbox"].modal-option-input:checked + .option-label::after {
+    transform: translateY(-50%) scale(1);
+    background-color: transparent; 
+    width: 20px;
+    height: 20px;
+    left: 10px;
+    /* Ícone de check SVG branco para melhor contraste */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    background-size: cover;
+    margin-left: 2px;
+}
+
+
+/* --- RADIO (Círculo) --- */
+input[type="radio"].modal-option-input + .option-label::before {
+    border-radius: 50%; /* Círculo */
+}
+input[type="radio"].modal-option-input:checked + .option-label::before {
+    border-color: var(--primary-color);
+}
+input[type="radio"].modal-option-input:checked + .option-label::after {
+    transform: translateY(-50%) scale(1);
+    border-radius: 50%; 
+    background-color: var(--primary-color); /* Ponto central da cor primária */
+    width: 10px; 
+    height: 10px; 
+    left: 15px; 
+    margin-left: 2px;
+}
+
+
+/* Destaques de texto */
+.option-name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.option-price {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    text-align: right;
+    margin-left: 10px;
+    flex-shrink: 0; 
+}
+
+/* Estilo quando o item está CHECKED (realça o fundo do label) */
+.modal-option-input:checked + .option-label {
+    background-color: #E8F5E9; /* Fundo verde super claro */
+    border-color: var(--primary-dark);
+    box-shadow: 0 0 0 1px var(--primary-dark); 
+}
