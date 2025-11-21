@@ -16,11 +16,11 @@ window.DELIVERY_TIME = "50–60min"; // Tempo médio de entrega (string)
 window.OPERATING_HOURS = {
     1: { open: "9:00", close: "23:00" }, // Segunda
     2: { open: "9:00", close: "23:00" }, // Terça
-    3: { open: "9:00", close: "15:00" }, // Quarta
-    4: { open: "9:00", close: "15:00" }, // Quinta
-    5: { open: "9:00", close: "15:00" }, // Sexta
-    6: { open: "9:00", close: "15:00" }, // Sábado
-    0: { open: "9:00", close: "15:00" }, // Domingo
+    3: { open: "9:00", close: "23:00" }, // Quarta
+    4: { open: "9:00", close: "23:00" }, // Quinta
+    5: { open: "9:00", close: "23:00" }, // Sexta
+    6: { open: "9:00", close: "23:00" }, // Sábado
+    0: { open: "9:00", close: "23:00" }, // Domingo
     // Se quiser fechar em um dia, use: 1: { open: null, close: null }, 
 }; 
 
@@ -605,3 +605,4 @@ window.DELIVERY_OPTIONS = [
     "Retirada"
 
 ];
+
