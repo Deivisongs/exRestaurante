@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Gerador de Pedidos Térmicos - Mobile</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+
+    <style>
+        /* Base Mobile First */
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 10px; 
+            background-color: #f4f4f9; 
+            margin: 0;
+        }
+        h2 { 
+            color: #333; 
+            font-size: 1.5em; 
+            margin-top: 10px;
+        }
+        p {
+            font-size: 0.9em;
+        }
+        textarea { 
+            width: 100%; 
+            height: 200px; 
+            margin-bottom: 15px; 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 8px; 
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        /* Botões otimizados para toque em dispositivos móveis */
+        button {
+            width: 100%; 
+            padding: 15px; 
+            margin-bottom: 10px;
+            background-color: #1a73e8; 
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+        button:hover { background-color: #155cb8; }
+        button:active { transform: translateY(1px); } 
+        
+        p#status { 
+            margin-top: 15px; 
+            font-weight: bold; 
+            text-align: center;
+            font-size: 1em;
+        }
+
+        hr { border: 0; border-top: 1px solid #ddd; margin: 20px 0; }
+
+        /* Estilo para o Recibo em HTML (Simulação Térmica 80mm) */
+        #recibo-container {
+            margin-top: 20px;
+            padding: 10px 0;
+            background-color: #fff;
+            display: none;
+            text-align: center;
+        }
+        #recibo-visualizacao {
+            width: 80mm; 
+            margin: 0 auto;
+            border: 1px solid #000;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 10pt;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* Estilos de impressão térmica */
+        .recibo-logo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .recibo-logo img {
+            width: 100px;
+            max-width: 50mm;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        .recibo-header { text-align: center; font-size: 14pt; font-weight: bold; margin-bottom: 5px; }
+        .recibo-subheader { text-align: center; font-size: 8pt; margin-bottom: 10px; }
+        .recibo-divisor { border-top: 1px dashed #000; margin: 5px 0; }
+        .recibo-info p { margin: 2px 0; font-size: 10pt; }
+        .recibo-item { display: flex; justify-content: space-between; font-weight: bold; line-height: 1.4; }
+        .recibo-detalhe { font-size: 9pt; font-weight: normal; margin-left: 10px; line-height: 1.2; }
+        .recibo-total { display: flex; justify-content: space-between; font-size: 11pt; margin-top: 5px; }
+        .recibo-total.final { font-size: 16pt; font-weight: bold; margin-top: 10px; padding-top: 5px; border-top: 2px solid #000; }
+        .recibo-pagamento { text-align: center; font-weight: bold; padding: 10px 0; }
+        .botoes-recibo { margin-top: 15px; }
+        
+        /* Estilos para o QR Code no Recibo */
+        .pix-container { text-align: center; margin: 10px 0; }
+        .pix-code-copia { 
+            word-break: break-all; 
+            font-size: 8pt; 
+            border: 1px solid #000; 
+            padding: 5px; 
+            margin-top: 5px;
+        }
+
+        /* Estilos de Botões específicos */
+        #imprimir-html { background-color: #ff9800; } 
+        #imprimir-html:hover { background-color: #e68900; }
+        #gerar-html { background-color: #4CAF50; } 
+        #gerar-html:hover { background-color: #45a049; }
+
+        /* ESTILOS DE IMPRESSÃO - CORRIGIDO PARA IMPRIMIR SÓ O RECIBO */
+        @media print {
+            /* Oculta tudo no body */
+            body * {
+                visibility: hidden;
+            }
+
+            /* Torna o container do recibo e seu conteúdo visíveis */
+            #recibo-visualizacao, #recibo-visualizacao * {
+                visibility: visible;
+            }
+
+            /* Posiciona o recibo no topo da página de impressão */
+            #recibo-visualizacao {
+                position: absolute;
+                left: 0;
+                top: 0;
+                margin: 0; 
+                padding: 5px;
+                width: 80mm;
+                border: none;
+                box-shadow: none;
+            }
+            
+            /* Remove margens da página de impressão */
+            @page { 
+                size: 80mm auto; 
+                margin: 0; 
+            }
+        }
+    </style>
+    <script>
+        // --- ⚙️ CONFIGURAÇÕES DO SEU ESTABELECIMENTO ---
+        const ESTABELECIMENTO = {
+            nome: "Império Burger", 
+            endereco: "Rua Gilmar Pereira Queiroz, 496 Camochinga, Santana do Ipanema", 
+            // ⚠️ COLOQUE A URL DA SUA LOGO AQUI (DEIXE VAZIO SE NÃO HOUVER)
+            logoUrl: "logo.png", 
+        };
+        // ----------------------------------------------------
+
+        // 🌟 CONFIGURAÇÕES DO PIX
+        const PIX_CONFIG = {
+            chave: '+5531991486490', // ⚠️ COLOQUE SUA CHAVE PIX AQUI
+            nome: 'GerenteFast', 
+            cidade: 'Belo Horizonte',
+        };
+        // ----------------------------------------------------
+
+        // Wrapper para usar a biblioteca qrcode-generator com a sintaxe toCanvas
+        const QRCode = {
+            toCanvas: function (text, options, callback) {
+                try {
+                    const qr = qrcode(0, 'M');
+                    qr.addData(text);
+                    qr.make();
+
+                    const size = options.width || 150;
+                    const canvas = document.createElement('canvas');
+                    canvas.width = size;
+                    canvas.height = size;
+
+                    const ctx = canvas.getContext('2d');
+                    const cellSize = size / qr.getModuleCount();
+
+                    ctx.fillStyle = "#FFFFFF";
+                    ctx.fillRect(0, 0, size, size);
+
+                    ctx.fillStyle = "#000000";
+                    for (let r = 0; r < qr.getModuleCount(); r++) {
+                        for (let c = 0; c < qr.getModuleCount(); c++) {
+                            if (qr.isDark(r, c)) {
+                                ctx.fillRect(c * cellSize, r * cellSize, cellSize, cellSize);
+                            }
+                        }
+                    }
+                    callback(null, canvas);
+                } catch (e) {
+                    callback(e, null);
+                }
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('gerar-html').addEventListener('click', processarPedido);
+            const btnImprimir = document.getElementById('imprimir-html');
+            if (btnImprimir) {
+                btnImprimir.addEventListener('click', imprimirRecibo);
+            }
+        });
+
+        function imprimirRecibo() {
+            window.print();
+        }
+
+        function processarPedido() {
+            let pedidoBruto = document.getElementById('pedido-whatsapp').value.trim();
+            if (!pedidoBruto) {
+                alert("Por favor, cole o texto do pedido.");
+                return;
+            }
+            
+            // Remove todos os asteriscos de negrito do WhatsApp
+            pedidoBruto = pedidoBruto.replace(/\*/g, ''); 
+
+            document.getElementById('recibo-container').style.display = 'none';
+            document.getElementById('status').textContent = "Processando pedido...";
+            const dadosEstruturados = extrairDadosFixos(pedidoBruto);
+            
+            if (dadosEstruturados && dadosEstruturados.itens.length > 0) {
+                document.getElementById('status').textContent = "Gerando visualização em HTML...";
+                try {
+                    const htmlRecibo = gerarHTMLRecibo(dadosEstruturados); 
+                    
+                    document.getElementById('recibo-visualizacao').innerHTML = htmlRecibo;
+                    document.getElementById('recibo-container').style.display = 'block';
+
+                    // Tenta gerar QR Code se for PIX
+                    if (dadosEstruturados.pagamento.toUpperCase().includes('PIX')) {
+                        const valor = dadosEstruturados.totais.final.toFixed(2);
+                        gerarQRCodeRecibo(valor);
+                    }
+                    
+                    document.getElementById('status').textContent = "Visualização do Recibo Gerada com Sucesso!";
+                } catch (e) {
+                    console.error("Erro ao gerar HTML:", e);
+                    document.getElementById('status').textContent = "ERRO: Falha ao gerar visualização. Verifique o console ou tente novamente.";
+                }
+            } else {
+                document.getElementById('status').textContent = "Erro ao processar. Verifique se o formato está correto ou se há itens no pedido.";
+            }
+        }
+
+        // FUNÇÕES AUXILIARES DO PIX
+        function formatField(id, value) {
+            return id + String(value.length).padStart(2, '0') + value;
+        }
+
+        function crc16(str) {
+            let crc = 0xFFFF;
+            for (let i = 0; i < str.length; i++) {
+                crc ^= str.charCodeAt(i) << 8;
+                for (let j = 0; j < 8; j++) {
+                    if ((crc & 0x8000) !== 0) {
+                        crc = (crc << 1) ^ 0x1021;
+                    } else {
+                        crc <<= 1;
+                    }
+                }
+            }
+            return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+        }
+
+        function gerarPixPayload(valor) {
+            const { chave, nome, cidade } = PIX_CONFIG;
+            
+            const payloadFormat = '000201';
+            const merchantAccount = formatField('26',
+                formatField('00', 'BR.GOV.BCB.PIX') + formatField('01', chave));
+
+            const merchantCategory = '52040000';
+            const currency = '5303986';
+            const amount = valor ? formatField('54', valor) : ''; 
+            const country = '5802BR';
+            const name = formatField('59', nome);
+            const city = formatField('60', cidade);
+            
+            const txid = formatField('05', '***');
+            const additional = formatField('62', txid);
+
+            const base = payloadFormat + merchantAccount + merchantCategory + currency + amount + country + name + city + additional;
+
+            const fullPix = base + '6304' + crc16(base + '6304');
+            return fullPix;
+        }
+
+        function gerarQRCodeRecibo(valor) {
+            const container = document.getElementById('pix-qrcode-container');
+            
+            if (!container) return; 
+            container.innerHTML = ''; 
+
+            const fullPix = gerarPixPayload(valor);
+            
+            QRCode.toCanvas(fullPix, { width: 100 }, function (err, canvas) {
+                if (!err) {
+                    container.appendChild(canvas);
+                    
+                    const codeBlock = document.createElement('div');
+                    codeBlock.className = 'pix-code-copia';
+                    codeBlock.textContent = fullPix;
+                    container.appendChild(codeBlock);
+                } else {
+                    console.error("Erro ao gerar QR Code:", err);
+                    container.innerHTML = '<p style="color: red; font-size: 8pt;">Erro ao gerar QR Code PIX.</p>';
+                }
+            });
+        }
+        
+        // Função helper para parsear o valor
+        const parseMoney = (linha) => {
+            let valorStr = linha.replace(/[^\d,]/g, '');
+            if (valorStr.includes(',')) {
+                valorStr = valorStr.replace(/\./g, '').replace(',', '.');
+            }
+            return parseFloat(valorStr) || 0.0;
+        }
+
+        /**
+         * EXTRAÇÃO DE DADOS: Lógica de máquina de estados
+         */
+        function extrairDadosFixos(texto) {
+            const dados = { 
+                itens: [], 
+                totais: { subtotal: 0.0, entrega: 0.0, final: 0.0 }, 
+                cliente: {}, 
+                entrega: {}, 
+                modalidade: 'Entrega',
+                pagamento: 'Não Informado' 
+            };
+            
+            const textoNormalizado = texto.replace(/\u00A0/g, ' '); 
+            const linhas = textoNormalizado.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+            
+            let modo = 'inicial';
+            let itemAtual = null;
+            let linhaTotaisEncontrada = false;
+
+            for(const linha of linhas) {
+                const linhaNormalizada = linha.replace(/[:_]/g, '').trim();
+                const linhaUpperCase = linha.toUpperCase();
+
+                if (linha.includes('📝 ITENS DO PEDIDO')) {
+                    modo = 'itens';
+                    continue;
+                } 
+                
+                if (linha.includes('💸FORMA DE PAGAMENTO')) {
+                    const match = linha.match(/💸FORMA DE PAGAMENTO:?\s*(.*)/);
+                    if (match && match[1].trim().length > 0) {
+                        dados.pagamento = match[1].trim();
+                    }
+                    continue; 
+                } 
+                
+                else if (linha.includes('🧑‍🦱 DADOS DO CLIENTE')) {
+                    modo = 'cliente';
+                    continue;
+                } else if (linha.includes('🛵 DADOS DE ENTREGA')) {
+                    modo = 'entrega';
+                    continue;
+                } else if (linha.includes('MODALIDADE:')) {
+                    dados.modalidade = linhaNormalizada.replace('MODALIDADE', '').trim();
+                    continue;
+                } 
+                
+                if (modo === 'itens') {
+                    if (linha.match(/^\d+x\s/)) {
+                        if (itemAtual) dados.itens.push(itemAtual); 
+                        const match = linha.match(/^(\d+)x\s*(.*?)\s*(\([\d,.]+\))?$/);
+                        if (match) {
+                            itemAtual = {
+                                quantidade: parseInt(match[1]),
+                                nome: match[2].trim().replace(/\s*(\([\d,.]+\))$/, ''), 
+                                complementos: [],
+                                observacoes: '',
+                                total_item: 0.0
+                            };
+                        }
+                    } 
+                    else if (itemAtual && (linha.startsWith('-') || linhaUpperCase.startsWith('OBS:'))) {
+                        if (linhaUpperCase.startsWith('OBS:')) {
+                            itemAtual.observacoes = linha.substring(4).trim();
+                        } else {
+                            itemAtual.complementos.push(linha.substring(1).trim());
+                        }
+                    }
+                    else if (itemAtual && linha.startsWith('Total Item:')) {
+                        itemAtual.total_item = parseMoney(linha);
+                        dados.itens.push(itemAtual);
+                        itemAtual = null; 
+                    }
+                } 
+                
+                if (!linhaTotaisEncontrada) {
+                    if (linhaUpperCase.startsWith('TOTAL ITENS:')) {
+                        dados.totais.subtotal = parseMoney(linha);
+                    } else if (linhaUpperCase.startsWith('VALOR ENTREGA:')) {
+                        dados.totais.entrega = parseMoney(linha);
+                    } else if (linhaUpperCase.startsWith('TOTAL FINAL:')) {
+                        dados.totais.final = parseMoney(linha);
+                        linhaTotaisEncontrada = true; 
+                    }
+                }
+                
+                else if (modo === 'cliente') {
+                    if (linhaNormalizada.startsWith('Nome')) {
+                        dados.cliente.nome = linhaNormalizada.replace('Nome', '').trim();
+                    } else if (linhaNormalizada.startsWith('Telefone')) {
+                        dados.cliente.telefone = linhaNormalizada.replace('Telefone', '').trim();
+                    } else if (linhaNormalizada.startsWith('CPF')) {
+                        dados.cliente.cpf = linhaNormalizada.replace('CPF', '').trim();
+                    }
+                } 
+                
+                else if (modo === 'entrega') {
+                    if (linhaNormalizada.startsWith('Endereço')) {
+                        dados.entrega.endereco = linhaNormalizada.replace('Endereço', '').trim();
+                    } else if (linhaNormalizada.startsWith('Complemento')) {
+                        dados.entrega.complemento = linhaNormalizada.replace('Complemento', '').trim();
+                    } else if (linhaNormalizada.startsWith('CEP')) {
+                        dados.entrega.cep = linhaNormalizada.replace('CEP', '').trim();
+                    }
+                }
+            }
+
+            if (dados.totais.subtotal === 0.0 && dados.itens.length > 0) {
+                dados.totais.subtotal = dados.itens.reduce((acc, item) => acc + item.total_item, 0);
+                dados.totais.final = dados.totais.subtotal + dados.totais.entrega;
+            }
+
+            return dados.itens.length > 0 ? dados : null;
+        }
+
+        /**
+         * FUNÇÃO DE GERAÇÃO DE HTML
+         */
+        function gerarHTMLRecibo(dados) {
+            const formatMoney = (value) => `R$ ${value.toFixed(2).replace('.', ',')}`;
+            let html = '';
+
+            // LOGO
+            if (ESTABELECIMENTO.logoUrl && !ESTABELECIMENTO.logoUrl.includes("seulogo.png")) {
+                html += `<div class="recibo-logo"><img src="${ESTABELECIMENTO.logoUrl}" alt="Logo"></div>`;
+            }
+
+            // 1. CABEÇALHO 
+            html += `<div class="recibo-header">${ESTABELECIMENTO.nome.toUpperCase()}</div>`;
+            html += `<div class="recibo-subheader">${ESTABELECIMENTO.endereco}</div>`;
+            html += `<div class="recibo-divisor"></div>`;
+
+            // 2. DADOS DO PEDIDO
+            html += `<div class="recibo-info">`;
+            html += `<p><strong>MODALIDADE:</strong> ${dados.modalidade.toUpperCase()}</p>`;
+            html += `<p><strong>CLIENTE:</strong> ${dados.cliente.nome || 'N/A'}</p>`;
+            html += `<p><strong>TELEFONE:</strong> ${dados.cliente.telefone || 'N/A'}</p>`;
+            html += `</div>`;
+            html += `<div class="recibo-divisor"></div>`;
+
+            // 3. ENDEREÇO / RETIRADA
+            if (dados.modalidade.toUpperCase().includes('ENTREGA')) {
+                let enderecoCompleto = `${dados.entrega.endereco || 'Aguardando endereço'}`;
+                if (dados.entrega.complemento) enderecoCompleto += ` / ${dados.entrega.complemento}`;
+                
+                html += `<div class="recibo-info">`;
+                html += `<p><strong>ENDEREÇO DE ENTREGA:</strong></p>`;
+                html += `<p>${enderecoCompleto}</p>`;
+                html += `</div>`;
+            } else {
+                html += `<p style="text-align: center;"><strong>PEDIDO PARA RETIRADA NA LOJA</strong></p>`;
+            }
+            html += `<div class="recibo-divisor"></div>`;
+
+            // 4. ITENS DO PEDIDO
+            html += `<p style="font-weight: bold; margin-bottom: 5px;">ITENS:</p>`;
+
+            dados.itens.forEach(item => {
+                // Item Principal
+                html += `<div class="recibo-item">`;
+                html += `<span>${item.quantidade}x ${item.nome.toUpperCase()}</span>`;
+                html += `<span>${formatMoney(item.total_item)}</span>`;
+                html += `</div>`;
+                
+                // Complementos e Observações
+                const detalhes = [...item.complementos.map(c => `+ ${c}`), 
+                                  item.observacoes ? `OBS: ${item.observacoes.toUpperCase()}` : ''].filter(d => d);
+                
+                detalhes.forEach(detalhe => {
+                    html += `<div class="recibo-detalhe">${detalhe}</div>`;
+                });
+            });
+
+            html += `<div class="recibo-divisor"></div>`;
+
+            // 5. TOTAIS
+            html += `<div class="recibo-total"><span>SUBTOTAL:</span><span>${formatMoney(dados.totais.subtotal)}</span></div>`;
+            
+            if (dados.totais.entrega > 0) {
+                html += `<div class="recibo-total"><span>ENTREGA:</span><span>${formatMoney(dados.totais.entrega)}</span></div>`;
+            }
+
+            // Total Final em destaque
+            html += `<div class="recibo-total final"><span>TOTAL A PAGAR:</span><span>${formatMoney(dados.totais.final)}</span></div>`;
+            html += `<div class="recibo-divisor"></div>`;
+
+            // 6. PAGAMENTO
+            html += `<div class="recibo-pagamento">PAGAMENTO: ${dados.pagamento.toUpperCase()}</div>`;
+            
+            // Container do QR Code (só será preenchido se for PIX)
+            if (dados.pagamento.toUpperCase().includes('PIX')) {
+                html += `<div class="pix-container">`;
+                html += `<p style="font-weight: bold; margin: 5px 0 2px;">ESCANEAR PIX (COPIA E COLA ABAIXO):</p>`;
+                html += `<div id="pix-qrcode-container"></div>`; 
+                html += `</div>`;
+            }
+
+            html += `<div class="recibo-divisor"></div>`;
+
+            // 7. RODAPÉ
+            html += `<div class="recibo-subheader">Obrigado pelo seu pedido!</div>`;
+
+            return html;
+        }
+    </script>
+</head>
+<body>
+    <h2>Gerador de Pedidos</h2>
+    <p>Cole o texto do pedido (copiado do WhatsApp).</p>
+    
+    <textarea id="pedido-whatsapp" placeholder="Cole o pedido formatado aqui..."></textarea>
+    
+    <button id="gerar-html">Gerar Recibo e Visualizar</button>
+    
+    <p id="status">Aguardando pedido...</p>
+
+    <hr>
+
+    <div id="recibo-container">
+        <h3>Visualização do Recibo (80mm)</h3>
+        <div id="recibo-visualizacao">
+            </div>
+        <div class="botoes-recibo">
+            <button id="imprimir-html">Imprimir Recibo</button>
+        </div>
+    </div>
+</body>
+</html>
