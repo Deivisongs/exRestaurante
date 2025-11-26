@@ -1307,6 +1307,4 @@ window.PAYMENT_OPTIONS = [
 window.DELIVERY_OPTIONS = [
     "Entrega",
     "Retirada"
-
 ];
-

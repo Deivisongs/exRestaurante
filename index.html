@@ -665,12 +665,12 @@
                     message += `*${item.quantity}x* ${item.name} (${item.price.toFixed(2).replace('.', ',')})\n`;
                     
                     // ⬅️ NOVO: Adiciona as opções selecionadas
+
                     if (item.selectedOptions && item.selectedOptions.length > 0) {
                         item.selectedOptions.forEach(group => {
-                            message += ` *-* `;
                             group.selections.forEach(sel => {
                                 const selPrice = sel.price > 0 ? ` (+${sel.price.toFixed(2).replace('.', ',')})` : '';
-                                message += `${sel.name}${selPrice}\n`;
+                                message += ` - ${sel.name}${selPrice}\n`;
                             });
                         });
                     }
