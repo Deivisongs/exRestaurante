@@ -4,7 +4,7 @@
 
 // --- 1. DADOS DE CONTATO ---
 // Número de WhatsApp para onde os pedidos serão enviados
-window.WHATSAPP_NUMBER = "+55991486490"; 
+window.WHATSAPP_NUMBER = "5531991486490"; 
 
 // NOVO: DADOS DO ESTABELECIMENTO
 window.BUSINESS_NAME = "Comida Caseira da Rosa"; // Nome no header e título
@@ -1309,3 +1309,4 @@ window.DELIVERY_OPTIONS = [
     "Retirada"
 
 ];
+
