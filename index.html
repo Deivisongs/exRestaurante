@@ -38,6 +38,18 @@
         <div id="product-list-container">
         </div>
 
+        <footer>
+            <p>© <span id="ano"></span> Desenvolvido por <strong>GerenteFast.</strong></p>
+            <p>Avenida João XXIII, Belo Horizonte/MG Tel (31)98335-1877.</p>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const anoAtual = new Date().getFullYear();
+                    document.getElementById("ano").textContent = anoAtual;
+                });
+            </script>
+        </footer>
+
     </main>
 
     <aside class="cart-sidebar" id="cartSidebar">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../img/logo.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="img/logo.ico" type="image/x-icon">
     <title>Comida Caseira da Rosa</title>
     
     <link rel="stylesheet" href="style.css">
@@ -37,6 +37,18 @@
 
         <div id="product-list-container">
         </div>
+
+        <footer>
+            <p>© <span id="ano"></span> Desenvolvido por <strong>GerenteFast.</strong></p>
+            <p>Avenida João XXIII, Belo Horizonte/MG Tel (31)98335-1877.</p>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const anoAtual = new Date().getFullYear();
+                    document.getElementById("ano").textContent = anoAtual;
+                });
+            </script>
+        </footer>
 
     </main>
 

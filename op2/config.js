@@ -4,11 +4,11 @@
 
 // --- 1. DADOS DE CONTATO ---
 // Número de WhatsApp para onde os pedidos serão enviados
-window.WHATSAPP_NUMBER = "5531983351877"; 
+window.WHATSAPP_NUMBER = "55991486490"; 
 
 // NOVO: DADOS DO ESTABELECIMENTO
 window.BUSINESS_NAME = "Comida Caseira da Rosa"; // Nome no header e título
-window.BUSINESS_LOGO_URL = "../img/logo.png"; // **ATUALIZE COM A SUA LOGO REAL**
+window.BUSINESS_LOGO_URL = "img/logo.png"; // **ATUALIZE COM A SUA LOGO REAL**
 window.DELIVERY_TIME = "50–60min"; // Tempo médio de entrega (string)
 
 // NOVO: HORÁRIOS DE FUNCIONAMENTO (Formato HH:MM)
@@ -34,18 +34,36 @@ window.PRODUCTS = {
             name: "PF Frango Cozido",
             price: 20.00,
             description: "Arroz, Feijão, Macarrão, Frango Cozido e Salada.",
-            image: "../img/pfFrango.jpg",
+            image: "img/pfFrango.jpg",
             options: [
                 {
-                    title: "Adicionar Refrigerante 350ml?",
+                    title: "Adicionar Refrigerante?",
                     type: "radio", // Seleção única
                     required: true,
                     items: [
                         { name: "Não quero", price: 0.00 },
-                        { name: "Coca-Cola", price: 6.50 },
-                        { name: "Fanta", price: 6.50 },
-                        { name: "Guaraná Jesus", price: 6.50 },
-                        { name: "Guaraná Antártica", price: 6.50 }
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
                     ]
                 }
             ]
@@ -54,92 +72,730 @@ window.PRODUCTS = {
             name: "PF Assado de Panela",
             price: 20.00,
             description: "Arroz, Feijão, Macarrão, Assado de Panela e Salada.",
-            image: "../img/pfAssadodePanela.jpg"
+            image: "img/pfAssadodePanela.jpg",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ]
         },
         {
             name: "PF Torta de Camarão",
             price: 20.00,
-            description: "Arroz, Feijão, Macarrão, Assado de Panela e Salada.",
-            image: "../img/pfTortadeCamarao.jpg" 
+            description: "Arroz, Feijão, Macarrão, Torta de Camarão e Salada.",
+            image: "img/pfTortadeCamarao.jpg",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ]
+        },
+        {
+            name: "PF Torta de Frango",
+            price: 20.00,
+            description: "Arroz, Feijão, Macarrão, Torta de Frango e Salada.",
+            image: "img/pftortadefrango.jpg",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ]
+        },
+        {
+            name: "PF Torta de Carne",
+            price: 20.00,
+            description: "Arroz, Feijão, Macarrão, Torta de Carne e Salada.",
+            image: "img/pftortadecarne.jpg",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ]
         },
         {
             name: "PF Strogonoff de Frango",
             price: 20.00,
             oldPrice: 20.00, // <--- PRODUTO EM PROMOÇÃO
             description: "Arroz, Stronoff de Frango, Batata Palha e Salada.",
-            image: "../img/pfStrogonoff.jpg" 
+            image: "img/pfStrogonoff.jpg",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ]
         },
         {
             name: "PF Bisteca de Porco",
             price: 20.00,
             description: "Arroz, Feijão, Macarrão, Bife de Porco, Tomate e Cebola.",
-            image: "../img/pfBifedePorco.jpg" 
+            image: "img/pfBifedePorco.jpg",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ]
         },
         {
             name: "PF de Mocotó",
             price: 25.00,
             description: "Arroz, Mocotó e Farofa.",
-            image: "../img/porcaomocoto.jpg" 
+            image: "img/porcaomocoto.jpg",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ]
         },
         {
             name: "PF Panqueca",
             price: 20.00,
             description: "Arroz, Feijão, Macarrão, Panqueca e Salada.",
-            image: "../img/pfpanqueca.jpeg" 
+            image: "img/pfpanqueca.jpeg",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ] 
         },
         {
             name: "PF Bife de Fígado",
             price: 17.00,
             description: "Arroz, Feijão, Macarrão, Bife de Figado e Salada.",
-            image: "../img/pfbifedefigado.webp" 
+            image: "img/pfbifedefigado.webp",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ]
         },
         {
             name: "PF Bife a Milanesa",
             price: 22.00,
             description: "Arroz, Feijão, Macarrão, Bife a Milanesa e Salada.",
-            image: "../img/pfbifeamilanesa.jpg" 
+            image: "img/pfbifeamilanesa.jpg",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ] 
         },
         {
             name: "PF Frango a Milanesa",
             price: 22.00,
             description: "Arroz, Feijão, Macarrão, Frango a Milanesa e Salada.",
-            image: "../img/pffrangoamilanesa.jpg" 
+            image: "img/pffrangoamilanesa.jpg",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ] 
         },
         {
             name: "PF Frango a Parmegiana",
             price: 22.00,
             description: "Arroz, Feijão, Macarrão, Frango a Parmegiana e Salada.",
-            image: "../img/pffrangoaparmegiana.jpg" 
+            image: "img/pffrangoaparmegiana.jpg",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ] 
         },
         {
             name: "PF Bife a Cavalo",
             price: 23.00,
             description: "Arroz, Feijão, Macarrão, Bife a Cavalo e Salada.",
-            image: "../img/pfbifeacavalo.jpg" 
+            image: "img/pfbifeacavalo.jpg",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ] 
         },
         {
             name: "PF Bife a Parmegiana",
             price: 22.00,
             description: "Arroz, Feijão, Macarrão, Bife a Parmegiana e Salada.",
-            image: "../img/pfbifeaparmegiana.avif" 
+            image: "img/pfbifeaparmegiana.avif",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ]
+        },
+        {
+            name: "PF Assado de Porco",
+            price: 20.00,
+            description: "Arroz, Feijão, Macarrão, Assado de Porco e Salada.",
+            image: "img/pfassadodeporco.webp",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ]
         },
         {
             name: "PF Carne de Sol",
             price: 23.00,
             description: "Arroz, Feijão, Macarrão, Carne de Sol e Salada.",
-            image: "../img/pfcarnedesol.jpeg" 
+            image: "img/pfcarnedesol.jpeg",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ] 
         },
         {
             name: "PF Carne Trinchada",
             price: 23.00,
             description: "Arroz, Feijão, Macarrão, Carne Trinchada e Salada.",
-            image: "../img/pfcarnetrinchada.jpg" 
+            image: "img/pfcarnetrinchada.jpg",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ]
+        },
+        {
+            name: "PF Linguiça Calabresa",
+            price: 20.00,
+            description: "Arroz, Feijão, Macarrão, Linguiça Calabresa e Salada.",
+            image: "img/pflinguicacalabresa.avif",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ] 
+        },
+        {
+            name: "PF Linguiça Toscana",
+            price: 20.00,
+            description: "Arroz, Feijão, Macarrão, Linguiça Toscana e Salada.",
+            image: "img/pflinguicatoscana.jpg",
+            options: [
+                {
+                    title: "Adicionar Refrigerante?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 }
+                    ]
+                },
+                {
+                    title: "Adicionar Sobremesa?",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                    ]
+                }
+            ] 
         },
         {
             name: "PF Lasanha(Sabores)",
             price: 22.00,
             description: "Arroz, Feijão, Macarrão, Lasanha e Farofa .",
-            image: "../img/pflasanha.webp",
+            image: "img/pflasanha.webp",
             options: [
                 {
                     title: "Sabor",
@@ -150,6 +806,20 @@ window.PRODUCTS = {
                         { name: "Carne", price: 0.00 },
                         { name: "Calabresa", price: 0.00 }
                     ]
+                },
+                {
+                    title: "Outros adicionais?",
+                    type: "checkbox", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Não quero", price: 0.00 },
+                        { name: "Purê de Batata", price: 10.00 },
+                        { name: "Purê de Mandioca", price: 10.00 },
+                        { name: "Coca-Cola 350ml", price: 6.50 },
+                        { name: "Fanta 350ml", price: 6.50 },
+                        { name: "Bolo d/Pote Ninho", price: 9.00 },
+                        { name: "Pudim", price: 8.50 },
+                    ]
                 }
             ]
             
@@ -158,10 +828,160 @@ window.PRODUCTS = {
     ],
     "Porções": [
         {
+            name: "Porção Arroz Branco",
+            price: 7.00,
+            description: "Porção de Arroz Branco <strong>(P ou G)</strong>",
+            image: "img/porcaodearroz.jpg",
+
+            options: [
+                {
+                    title: "Tamanho",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Pequena", price: 0.00 },
+                        { name: "Grande", price: 8.00 }
+                    ]
+                }
+            ]
+        },
+        {
+            name: "Porção Arroz Maria Isabel",
+            price: 8.00,
+            description: "Porção de Arroz Maria Isabel <br><strong>(P ou G)</strong>",
+            image: "img/porcaoarrozmariaisabel.jpg",
+
+            options: [
+                {
+                    title: "Tamanho",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Pequena", price: 0.00 },
+                        { name: "Grande", price: 8.00 }
+                    ]
+                }
+            ]
+        },
+        {
+            name: "Porção Arroz Baião de Dois",
+            price: 8.00,
+            description: "Porção Arroz Baião de Dois <strong>(P ou G)</strong>",
+            image: "img/porcaobaiaodedois.jpg",
+
+            options: [
+                {
+                    title: "Tamanho",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Pequena", price: 0.00 },
+                        { name: "Grande", price: 8.00 }
+                    ]
+                }
+            ]
+        },
+        {
+            name: "Porção Feijão",
+            price: 10.00,
+            description: "Porção de Feijão <strong>(P ou G)</strong>",
+            image: "img/porcaodefeijao.jpg",
+
+            options: [
+                {
+                    title: "Tamanho",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Pequena", price: 0.00 },
+                        { name: "Grande", price: 6.00 }
+                    ]
+                }
+            ]
+        },
+        {
+            name: "Porção Macarrão",
+            price: 7.00,
+            description: "Porção de Macarrão <strong>(P ou G)</strong>",
+            image: "img/porcaodemacarao.webp",
+
+            options: [
+                {
+                    title: "Tamanho",
+                    type: "radio", // Seleção única
+                    required: true,
+                    items: [
+                        { name: "Pequena", price: 0.00 },
+                        { name: "Grande", price: 8.00 }
+                    ]
+                }
+                ]
+        },
+        {
+            name: "Porção Purê de Batata",
+            price: 10.00,
+            description: "Porção de Purê de Batata.",
+            image: "img/puredebatata.webp" 
+        },
+        {
+            name: "Porção Purê de Mandioca",
+            price: 10.00,
+            description: "Porção de Purê de Mandioca.",
+            image: "img/puredemandioca.jpg" 
+        },
+        {
+            name: "Porção de Macaxeira",
+            price: 12.00,
+            description: "Porção de Macaxeira a parte.",
+            image: "img/porcaodemacaxeira.jpg" 
+        },
+        {
+            name: "Porção de Batata Frita",
+            price: 12.00,
+            description: "Porção de Batata Frita.",
+            image: "img/porcaodebatatafrita.jpg" 
+        },
+        {
+            name: "Porção de Toscana",
+            price: 35.00,
+            description: "Porção de Linguiça Toscana.",
+            image: "img/porcaotoscana.webp" 
+        },
+        {
+            name: "Porção de Calabresa",
+            price: 35.00,
+            description: "Porção Linguiça Calabresa.",
+            image: "img/porcaocalabresa.jpg" 
+        },
+        {
+            name: "Porção de Mocotó",
+            price: 35.00,
+            description: "Porção de Mocotó.",
+            image: "img/porcaomocoto.jpg" 
+        },
+        {
+            name: "Porção de Carne Trinchada",
+            price: 35.00,
+            description: "Porção de Carne a parte.",
+            image: "img/porcaodecarne.jpg" 
+        },
+        {
+            name: "Porção de Carne de Sol",
+            price: 35.00,
+            description: "Porção de Carne a parte.",
+            image: "img/porcaocarnedesol.jpg" 
+        },
+        {
+            name: "Porção de Frango",
+            price: 35.00,
+            description: "Porção de Frango a parte.",
+            image: "img/porcaodefrango.jpg" 
+        },
+        {
             name: "Porçao Lasanha (Sabores)",
             price: 35.00,
             description: "<strong>Sabor: </strong>Carne, Frango ou Calabresa.",
-            image: "../img/lasanha.webp",
+            image: "img/lasanha.webp",
             options: [
                 {
                     title: "Sabor",
@@ -180,183 +1000,57 @@ window.PRODUCTS = {
             name: "Porção Cozido de Boi",
             price: 35.00,
             description: "Porção Cozido de Boi.",
-            image: "../img/cozido.jpg"
+            image: "img/cozido.jpg"
         },
         {
             name: "Porção Frango ao Molho",
             price: 35.00,
             description: "Porção Frango ao Molho.",
-            image: "../img/frangoAoMolho.jpg" 
+            image: "img/frangoAoMolho.jpg" 
         },
-        {
-            name: "Porção Arroz Branco",
-            price: 7.00,
-            description: "Porção de Arroz Branco <strong>(P ou G)</strong>",
-            image: "../img/porcaodearroz.jpg",
-
-            options: [
-                {
-                    title: "Tamanho",
-                    type: "radio", // Seleção única
-                    required: true,
-                    items: [
-                        { name: "Pequena", price: 0.00 },
-                        { name: "Grande", price: 8.00 }
-                    ]
-                }
-            ]
-        },
-        {
-            name: "Porção Arroz Maria Isabel",
-            price: 8.00,
-            description: "Porção de Arroz Maria Isabel <br><strong>(P ou G)</strong>",
-            image: "../img/porcaoarrozmariaisabel.jpg",
-
-            options: [
-                {
-                    title: "Tamanho",
-                    type: "radio", // Seleção única
-                    required: true,
-                    items: [
-                        { name: "Pequena", price: 0.00 },
-                        { name: "Grande", price: 8.00 }
-                    ]
-                }
-            ]
-        },
-        {
-            name: "Porção Arroz Baião de Dois",
-            price: 8.00,
-            description: "Porção Arroz Baião de Dois <strong>(P ou G)</strong>",
-            image: "../img/porcaobaiaodedois.jpg",
-
-            options: [
-                {
-                    title: "Tamanho",
-                    type: "radio", // Seleção única
-                    required: true,
-                    items: [
-                        { name: "Pequena", price: 0.00 },
-                        { name: "Grande", price: 8.00 }
-                    ]
-                }
-            ]
-        },
-        {
-            name: "Porção Feijão",
-            price: 10.00,
-            description: "Porção de Feijão <strong>(P ou G)</strong>",
-            image: "../img/porcaodefeijao.jpg",
-
-            options: [
-                {
-                    title: "Tamanho",
-                    type: "radio", // Seleção única
-                    required: true,
-                    items: [
-                        { name: "Pequena", price: 0.00 },
-                        { name: "Grande", price: 6.00 }
-                    ]
-                }
-            ]
-        },
-        {
-            name: "Porção Macarrão",
-            price: 7.00,
-            description: "Porção de Macarrão <strong>(P ou G)</strong>",
-            image: "../img/porcaodemacarao.webp",
-
-            options: [
-                {
-                    title: "Tamanho",
-                    type: "radio", // Seleção única
-                    required: true,
-                    items: [
-                        { name: "Pequena", price: 0.00 },
-                        { name: "Grande", price: 8.00 }
-                    ]
-                }
-                ]
-        },
-        {
-            name: "Porção de Mocotó",
-            price: 35.00,
-            description: "Porção Caldo de Mocotó.",
-            image: "../img/porcaomocoto.jpg" 
-        },
-        {
-            name: "Porção de Carne Trinchada",
-            price: 35.00,
-            description: "Porção de Carne a parte.",
-            image: "../img/porcaodecarne.jpg" 
-        },
-        {
-            name: "Porção de Carne de Sol",
-            price: 35.00,
-            description: "Porção de Carne a parte.",
-            image: "../img/porcaocarnedesol.jpg" 
-        },
-        {
-            name: "Porção de Frango",
-            price: 35.00,
-            description: "Porção de Frango a parte.",
-            image: "../img/porcaodefrango.jpg" 
-        },
-        {
-            name: "Porção de Macaxeira",
-            price: 12.00,
-            description: "Porção de Macaxeira a parte.",
-            image: "../img/porcaodemacaxeira.jpg" 
-        },
-        {
-            name: "Porção de Batata Frita",
-            price: 12.00,
-            description: "Porção de Batata Frita.",
-            image: "../img/porcaodebatatafrita.jpg" 
-        }
     ],
     "Farofas": [
         {
             name: "Farofa de Ovo",
             price: 5.00,
             description: "Farofa de Ovo Tradicional.",
-            image: "../img/farofadeovo.webp"  // imagem de farofa no Unsplash :contentReference[oaicite:4]{index=4}
+            image: "img/farofadeovo.webp"  // imagem de farofa no Unsplash :contentReference[oaicite:4]{index=4}
         },
         {
             name: "Farofa de Bacon",
             price: 10.00,
             description: "Farofa de Bacon Tradicional.",
-            image: "../img/farofadebacon.jpg"  // mesma imagem genérica de farofa
+            image: "img/farofadebacon.jpg"  // mesma imagem genérica de farofa
         },
         {
             name: "Farofa de Calabresa",
             price: 8.00,
             description: "Farofa de Calabresa Tradicional.",
-            image: "../img/farofadecalabresa.jpg"
+            image: "img/farofadecalabresa.jpg"
         },
         {
             name: "Farofa de Cuscuz",
             price: 10.00,
             description: "Farofa de Cuscuz Tradicional.",
-            image: "../img/farofadecuscuz.jpg"
+            image: "img/farofadecuscuz.jpg"
         },
         {
             name: "Farofa de Carne",
             price: 10.00,
             description: "Farofa de Carne Tradicional.",
-            image: "../img/farofa de carne.jpg"
+            image: "img/farofa de carne.jpg"
         },
         {
             name: "Farofa de Frango",
             price: 8.00,
             description: "Farofa de Frango Tradicional.",
-            image: "../img/farofadefrango.jpg"
+            image: "img/farofadefrango.jpg"
         },
         {
             name: "Farofa de Soja",
             price: 6.00,
             description: "Farofa de Soja Tradicional.",
-            image: "../img/farofadesoja.jpeg"
+            image: "img/farofadesoja.jpeg"
         }
     ],
     "Cafés da Manhã": [
@@ -364,7 +1058,7 @@ window.PRODUCTS = {
             name: "Torta (Sabores)",
             price: 20.00,
             description: "<strong>Sabores:</strong> Camarão, Frango ou Carne",
-            image: "../img/tortas.jpg",  // imagem genérica de comida
+            image: "img/tortas.jpg",  // imagem genérica de comida
             options: [
                 {
                     title: "Sabor",
@@ -383,25 +1077,25 @@ window.PRODUCTS = {
             name: "Café + tapioca de frango",
             price: 15.00,
             description: "Cafe Tradicional e Tapioca de Frango.",
-            image: "../img/tapiocaCafe.jpg" 
+            image: "img/tapiocaCafe.jpg" 
         },
         {
             name: "Tapioca de frango",
             price: 10.00,
             description: "Tapioca de Frango.",
-            image: "../img/tapiocadefrango.jpg"
+            image: "img/tapiocadefrango.jpg"
         },
         {
             name: "Pão com ovo",
             price: 6.00,
             description: "Pão Frances com Ovo.",
-            image: "../img/paocomovo.jpg"
+            image: "img/paocomovo.jpg"
         },
         {
             name: "Cuscuz recheado (Sabores)",
             price: 12.00,
             description: "<strong>Sabores:</strong> Carne, Frango, Calabresa e Carne de Sol.",
-            image: "../img/cuscuzrecheado.jpg",
+            image: "img/cuscuzrecheado.jpg",
             options: [
                 {
                     title: "Recheio",
@@ -417,22 +1111,34 @@ window.PRODUCTS = {
             ]
         },
         {
+            name: "Café",
+            price: 3.00,
+            description: "Café Tradicional.",
+            image: "img/cafe.jpg"
+        },
+        {
             name: "Café com leite",
             price: 2.50,
-            description: "Cafe com leite Tradicional.",
-            image: "../img/cafecomleite.jpeg"
+            description: "Café com leite Tradicional.",
+            image: "img/cafecomleite.jpeg"
+        },
+        {
+            name: "Nescau",
+            price: 3.00,
+            description: "Achocolatado Nescau.",
+            image: "img/nescau.png"
         },
         {
             name: "Tapioca recheada",
             price: 10.00,
             description: "Tapioca recheada com queijo, presunto e ovo.",
-            image: "../img/tapiocarecheada.jpg"
+            image: "img/tapiocarecheada.jpg"
         },
         {
             name: "Caldo de ovos",
             price: 10.00,
             description: "",
-            image: "../img/caldodeovos.webp"  // imagem genérica de comida
+            image: "img/caldodeovos.webp"  // imagem genérica de comida
         }
     ],
     "Bebidas": [
@@ -440,7 +1146,7 @@ window.PRODUCTS = {
             name: "Sucos 500ml",
             price: 6.50,
             description: "Abacaxi, Acerola, Caja, Caju, Cupuaçu, Goiaba, Graviola, Maracuja, Tamarino",
-            image: "../img/sucos.jpg",
+            image: "img/sucos.jpg",
             options: [
                 {
                     title: "Preparo com",
@@ -473,7 +1179,7 @@ window.PRODUCTS = {
             name: "Refrigerante Lata 350ml",
             price: 6.50,
             description: "Refrigerante Lata 350ml",
-            image: "../img/refri350.png",
+            image: "img/refri350.png",
             options: [
                 {
                     title: "Escolha",
@@ -492,7 +1198,7 @@ window.PRODUCTS = {
             name: "Refrigerante Lata 269ml",
             price: 5.00,
             description: "Refrigerante Lata 269ml",
-            image: "../img/refri269.png",
+            image: "img/refri269.png",
             options: [
                 {
                     title: "Escolha",
@@ -511,7 +1217,7 @@ window.PRODUCTS = {
             name: "Refrigerante 2L",
             price: 12.00,
             description: "RefrigeranteS 2L",
-            image: "../img/refri2l.png",
+            image: "img/refri2l.png",
             options: [
                 {
                     title: "Escolha",
@@ -532,7 +1238,7 @@ window.PRODUCTS = {
             name: "Musse(Sabores)",
             price: 6.00,
             description: "<strong>Sabores: </strong>Maracujá, Abacaxi, Limão.",
-            image: "../img/musse.jpg",
+            image: "img/musse.jpg",
             options: [
                 {
                     title: "Sabor",
@@ -550,13 +1256,13 @@ window.PRODUCTS = {
             name: "Pudim",
             price: 8.00,
             description: "Pudim Tradicional",
-            image: "../img/pudim.webp",
+            image: "img/pudim.webp",
         },
         {
             name: "Bolo de Pote(Sabores)",
             price: 9.00,
             description: "<strong>Sabores: </strong>Chocolate ou Ninho.",
-            image: "../img/bolodepote.jpg",
+            image: "img/bolodepote.jpg",
             options: [
                 {
                     title: "Sabor",
@@ -587,21 +1293,18 @@ window.CITY_WIDE_FREIGHT = {
     // ⚠️ Nome da cidade que utiliza esse CEP (para garantir a checagem)
     CITY_NAME: 'Paco do Lumiar', 
     // Valor fixo de entrega para a cidade inteira
-    FIXED_FREIGHT_COST: 6.00 
+    FIXED_FREIGHT_COST: 5.00 
 };
 
 // --- 4. OPÇÕES DE PAGAMENTO ---
 window.PAYMENT_OPTIONS = [
-    "Dinheiro (Traga troco)",
     "Pix (CNPJ / Chave)",
     "Cartão de Crédito",
-    "Cartão de Débito",
-    "Vale Refeição" //Perguntar se Aceita **************************************
+    "Cartão de Débito"
 ];
 
 // --- 5. OPÇÕES DE ENTREGA/SERVIÇO ---
 window.DELIVERY_OPTIONS = [
     "Entrega",
     "Retirada"
-
 ];
